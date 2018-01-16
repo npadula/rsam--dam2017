@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="rsam.utn2017.dam.agenda.LoginActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:context="rsam.utn2017.dam.agenda.LoginActivity">
+
+    <Button
+        android:id="@+id/btnInstructor"
+        android:layout_width="140dp"
+        android:layout_height="49dp"
+        android:text="Acceder como Instructor"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="110dp" />
+
+    <Button
+        android:id="@+id/btnResidente"
+        android:layout_width="143dp"
+        android:layout_height="49dp"
+        android:text="Acceder como Residente"
+        tools:layout_editor_absoluteX="189dp"
+        tools:layout_editor_absoluteY="110dp" />
+</LinearLayout>
+
+</LinearLayout>

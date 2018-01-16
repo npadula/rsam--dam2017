@@ -1,5 +1,6 @@
 package rsam.utn2017.dam.agenda;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
      */
     private ViewPager mViewPager;
     private FloatingActionButton fab;
+    private String tipousuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
                         .setAction("Action", null).show();
             }
         });
+        fab.hide();
+
+
+        Intent i = getIntent();
+        tipousuario = i.getStringExtra("USR");
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -78,7 +85,10 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
             public void onPageSelected(int position) {
                 switch (position) {
                     case 2:
-                        fab.show();
+                        if(tipousuario.equals("INSTRUCTOR"))
+                            fab.show();
+                        else
+                            fab.hide();
                         break;
                     default:
                         fab.hide();
