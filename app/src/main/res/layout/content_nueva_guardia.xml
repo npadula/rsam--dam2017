@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="rsam.utn2017.dam.agenda.NuevaGuardia"
+android:orientation="vertical"
+android:weightSum="1">
+
+    <ScrollView
+        android:id="@+id/mainLayoutScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            tools:context="rsam.utn2017.dam.agenda.NuevaGuardia">
+
+            <TextView
+                android:id="@+id/txtHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="text"
+                android:textSize="26dp" />
+
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="73dp">
+
+                <TextView
+                    android:id="@+id/txtEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Equipofgsdgdfgdfgdfggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" />
+            </ScrollView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAgregar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar Miembro" />
+
+                <Button
+                    android:id="@+id/btnCrearGuardia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Crear Guardia" />
+
+                <Button
+                    android:id="@+id/btnReiniciar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reiniciar" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lista"
+                android:layout_width="match_parent"
+                android:layout_height="318dp"
+                android:choiceMode="singleChoice" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

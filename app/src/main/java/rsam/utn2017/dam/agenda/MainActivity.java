@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent nuevaGuardia = new Intent(MainActivity.this,NuevaGuardia.class);
+                startActivityForResult(nuevaGuardia,2);
             }
         });
         fab.hide();
