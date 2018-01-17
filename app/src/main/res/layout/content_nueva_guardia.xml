@@ -1,77 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="rsam.utn2017.dam.agenda.NuevaGuardia"
-android:orientation="vertical"
-android:weightSum="1">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
 
-    <ScrollView
-        android:id="@+id/mainLayoutScrollView"
+    tools:context="rsam.utn2017.dam.agenda.NuevaGuardia">
+
+    <TextView
+        android:id="@+id/txtHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1"
-            tools:context="rsam.utn2017.dam.agenda.NuevaGuardia">
-
-            <TextView
-                android:id="@+id/txtHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="text"
-                android:textSize="26dp" />
+        android:layout_height="wrap_content"
+        android:text="text"
+        android:textSize="26dp" />
 
 
-            <ScrollView
-                android:id="@+id/scrollView"
-                android:layout_width="match_parent"
-                android:layout_height="73dp">
-
-                <TextView
-                    android:id="@+id/txtEquipo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Equipofgsdgdfgdfgdfggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" />
-            </ScrollView>
+    <TextView
+        android:id="@+id/txtEquipo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="uno dos tres" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
-                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btnAgregar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agregar Miembro" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-                <Button
-                    android:id="@+id/btnCrearGuardia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Crear Guardia" />
+        android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btnReiniciar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reiniciar" />
-            </LinearLayout>
+        <Button
+            android:id="@+id/btnAgregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agregar Miembro" />
 
-            <ListView
-                android:id="@+id/lista"
-                android:layout_width="match_parent"
-                android:layout_height="318dp"
-                android:choiceMode="singleChoice" />
+        <Button
+            android:id="@+id/btnCrearGuardia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear Guardia" />
 
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/btnReiniciar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reiniciar" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lista"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice" />
+
 </LinearLayout>

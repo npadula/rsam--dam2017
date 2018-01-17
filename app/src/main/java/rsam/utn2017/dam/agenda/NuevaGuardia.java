@@ -37,8 +37,7 @@ public class NuevaGuardia extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_guardia);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         guardia = new Guardia();
         txtEquipo = (TextView) findViewById(R.id.txtEquipo);
