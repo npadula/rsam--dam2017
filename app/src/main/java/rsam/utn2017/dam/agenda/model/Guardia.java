@@ -17,7 +17,7 @@ public class Guardia implements Serializable {
     public String getTextoEquipo() {
         String res = "";
         for(int i = 0;i<Equipo.size();i++){
-            res = res + Equipo.get(i).toString();
+            res = res + '\n' +  Equipo.get(i).toString();
         }
 
         return res;
@@ -44,5 +44,9 @@ public class Guardia implements Serializable {
 
     public void setEquipo(ArrayList<Usuario> equipo) {
         Equipo = equipo;
+    }
+
+    public void resetEquipo() {
+        Equipo = new ArrayList<>();
     }
 }

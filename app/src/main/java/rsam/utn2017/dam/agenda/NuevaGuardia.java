@@ -1,6 +1,8 @@
 package rsam.utn2017.dam.agenda;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +36,8 @@ public class NuevaGuardia extends AppCompatActivity {
     private Usuario[] elementos;
     private ArrayAdapter<Usuario> miAdaptador;
     private Usuario usuarioSeleccionado;
+    private Utils utils;
+    private EditText txtFecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,7 @@ public class NuevaGuardia extends AppCompatActivity {
         miLista = (ListView) findViewById(R.id.lista);
         btnAgregar = (Button)findViewById(R.id.btnAgregar);
 
-        Utils utils = new Utils();
+        utils = new Utils();
         utils.iniciarListas();
 
         elementos= utils.getListaPersonas();
@@ -81,11 +87,18 @@ public class NuevaGuardia extends AppCompatActivity {
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(usuarioSeleccionado != null){
 
                     guardia.addUsuario(usuarioSeleccionado);
 
                     txtEquipo.setText(guardia.getTextoEquipo());
+
+                    ArrayList<Usuario> newDataSet = new ArrayList<Usuario>(Arrays.asList(elementos));
+                    newDataSet.remove(usuarioSeleccionado);
+                    elementos = newDataSet.toArray(new Usuario[0]);
+                    resetAdapterDataSet(elementos);
+
 
                 }
 
@@ -104,13 +117,14 @@ public class NuevaGuardia extends AppCompatActivity {
 
 
 
-
-
-
-
     }
 
+
     private void reiniciarGuardia() {
+        guardia.resetEquipo();
+        txtEquipo.setText("");
+        elementos = utils.getListaPersonas();
+        resetAdapterDataSet(elementos);
     }
 
     private void clearListViewSelection(){
