@@ -1,13 +1,8 @@
 package rsam.utn2017.dam.agenda;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,10 +11,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import rsam.utn2017.dam.agenda.model.Guardia;
 import rsam.utn2017.dam.agenda.model.Usuario;
@@ -37,7 +35,8 @@ public class NuevaGuardia extends AppCompatActivity {
     private ArrayAdapter<Usuario> miAdaptador;
     private Usuario usuarioSeleccionado;
     private Utils utils;
-    private EditText txtFecha;
+    private EditText fecha;
+    private Calendar myCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +68,19 @@ public class NuevaGuardia extends AppCompatActivity {
         miLista.setAdapter( miAdaptador );
 
 
+        fecha = (EditText) findViewById(R.id.fecha);
+
 
         btnCrearGuardia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Persistir via REST y volver a pantalla de guardias
+
+
             }
         });
+
+        setPicker();
 
         btnReiniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,9 +124,48 @@ public class NuevaGuardia extends AppCompatActivity {
 
     }
 
+    private void setPicker(){
+       myCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                setFechaGuardia();
+            }
+
+        };
+
+        fecha.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(NuevaGuardia.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void setFechaGuardia() {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        fecha.setText(sdf.format(myCalendar.getTime()));
+
+        guardia.setFecha(myCalendar.getTime());
+    }
+
 
     private void reiniciarGuardia() {
         guardia.resetEquipo();
+        guardia.setFecha(new Date());
         txtEquipo.setText("");
         elementos = utils.getListaPersonas();
         resetAdapterDataSet(elementos);
