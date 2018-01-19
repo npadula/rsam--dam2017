@@ -1,5 +1,11 @@
 {
 "guardias" : [],
-"lugares": []
-
+"lugares": [],
+"usuarios" : [
+	{
+	"id": 1,
+	"dni":"1234",
+	"nombre":"juan perez"
+	}
+	]
 }
