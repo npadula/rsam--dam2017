@@ -135,6 +135,7 @@ public static int NUEVA_GUARDIA = 332;
             Guardia g = (Guardia) data.getParcelableExtra("GUARDIA");
             if(requestCode == NUEVA_GUARDIA){
                 dao.crear(g);
+
                 opResult = "Guardia creada";
             }
             else if (requestCode == EDITAR_GUARDIA) {
@@ -149,7 +150,7 @@ public static int NUEVA_GUARDIA = 332;
                     //Eliminar reclamo
                     dao.borrar(g);
                     opResult = "Guardia eliminada";
-                }
+            }
 
             }
 
@@ -170,7 +171,7 @@ public static int NUEVA_GUARDIA = 332;
         }
         @Override
         public void run() {
-            List<Guardia> _guardias = dao.guardias();
+            List<Guardia> _guardias = dao.guardias(true);
             listaGuardias.clear();
             listaGuardias.addAll(_guardias);
             runOnUiThread(new Runnable() {

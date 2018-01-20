@@ -8,6 +8,39 @@
           "uID": 1
         }
       ]
+    },
+    {
+      "id": 2,
+      "fecha": "26/01/18",
+      "equipo": [
+        {
+          "uID": 1
+        },
+        {
+          "uID": 5
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "fecha": "18/01/18",
+      "equipo": [
+        {
+          "uID": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "fecha": "20/01/18",
+      "equipo": [
+        {
+          "uID": 2
+        },
+        {
+          "uID": 3
+        }
+      ]
     }
   ],
   "lugares": [],
@@ -16,6 +49,26 @@
       "id": 1,
       "dni": "1234",
       "nombre": "juan perez"
+    },
+    {
+      "id": 2,
+      "dni": "3453",
+      "nombre": "julieta rettore"
+    },
+    {
+      "id": 3,
+      "dni": "46456",
+      "nombre": "nahir galarza"
+    },
+    {
+      "id": 4,
+      "dni": "754675",
+      "nombre": "juan domingo peron"
+    },
+    {
+      "id": 5,
+      "dni": "754675654564",
+      "nombre": "elon musk"
     }
   ]
 }

@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.RunnableFuture;
 
 import rsam.utn2017.dam.agenda.dal.DAO;
 import rsam.utn2017.dam.agenda.model.Guardia;
@@ -34,7 +35,7 @@ public class NuevaGuardia extends AppCompatActivity {
     private Button btnReiniciar;
     private ListView miLista;
     private Button btnAgregar;
-    private Usuario[] elementos;
+    private ArrayList<Usuario> usuarios = new ArrayList<>();
     private ArrayAdapter<Usuario> miAdaptador;
     private Usuario usuarioSeleccionado;
     private Utils utils;
@@ -59,21 +60,19 @@ public class NuevaGuardia extends AppCompatActivity {
         miLista = (ListView) findViewById(R.id.lista);
         btnAgregar = (Button)findViewById(R.id.btnAgregar);
 
-        utils = new Utils();
-        utils.iniciarListas();
 
-        elementos= utils.getListaPersonas();
-        ArrayList<Usuario> lst = new ArrayList<Usuario>(Arrays.asList(elementos));
+
+
 
         miAdaptador= new ArrayAdapter<Usuario>(
                 this,
                 android.R.layout.simple_list_item_single_choice,
-                lst);
+                usuarios);
 
 
         miLista.setAdapter( miAdaptador );
 
-
+        reiniciarGuardia();
         fecha = (EditText) findViewById(R.id.fecha);
 
 
@@ -129,10 +128,10 @@ public class NuevaGuardia extends AppCompatActivity {
 
                     txtEquipo.setText(guardia.getTextoEquipo());
 
-                    ArrayList<Usuario> newDataSet = new ArrayList<Usuario>(Arrays.asList(elementos));
+                    ArrayList<Usuario> newDataSet = new ArrayList<Usuario>(usuarios);
                     newDataSet.remove(usuarioSeleccionado);
-                    elementos = newDataSet.toArray(new Usuario[0]);
-                    resetAdapterDataSet(elementos);
+                    usuarios = newDataSet;
+                    resetAdapterDataSet(usuarios);
 
 
                 }
@@ -197,8 +196,24 @@ public class NuevaGuardia extends AppCompatActivity {
         guardia.resetEquipo();
         guardia.setFecha(new Date());
         txtEquipo.setText("");
-        elementos = utils.getListaPersonas();
-        resetAdapterDataSet(elementos);
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                usuarios = dao.usuarios();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        resetAdapterDataSet(usuarios);
+                    }
+                });
+            }
+        };
+
+        Thread t = new Thread(r);
+        t.start();
+
     }
 
     private void clearListViewSelection(){
@@ -206,11 +221,10 @@ public class NuevaGuardia extends AppCompatActivity {
         miLista.clearChoices();
         miAdaptador.notifyDataSetChanged();
     }
-    private void resetAdapterDataSet(Usuario[] newDataSet) {
+    private void resetAdapterDataSet(ArrayList<Usuario> newDataSet) {
 
         miAdaptador.clear();
         clearListViewSelection();
-        ArrayList<Usuario> lst = new ArrayList<Usuario>(Arrays.asList(newDataSet));
         miAdaptador.addAll(newDataSet);
         miAdaptador.notifyDataSetChanged();
     }

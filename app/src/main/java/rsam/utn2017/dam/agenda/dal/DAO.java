@@ -28,8 +28,8 @@ import rsam.utn2017.dam.agenda.model.Usuario;
 
 public class DAO  {
 
-    private List<Guardia> listaGuardias = null;
-    public List<Usuario> usuarios = null;
+    private ArrayList<Guardia> listaGuardias = null;
+    public ArrayList<Usuario> usuarios = null;
     private String server;
     private MyGenericHTTPClient cliente;
 
@@ -68,7 +68,7 @@ public class DAO  {
     }*/
 
 
- public List<Usuario> usuarios(){
+ public ArrayList<Usuario> usuarios(){
      if(usuarios!=null && usuarios.size()>0) return this.usuarios;
 
      else{
@@ -88,8 +88,9 @@ public class DAO  {
  }
 
 
-    public List<Guardia> guardias() {
-        if(listaGuardias!=null) return this.listaGuardias;
+    public List<Guardia> guardias(Boolean reload) {
+
+        if(listaGuardias!=null && !reload) return this.listaGuardias;
 
         listaGuardias = new ArrayList<>();
         String guardiasJSON = cliente.getAll("guardias");
@@ -203,7 +204,7 @@ public class DAO  {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                Integer newID = guardias().size() + 1;
+                Integer newID = guardias(false).size() + 1;
                 g.setId(newID);
                 cliente.post("guardias",g.toJSON());
             }
