@@ -21,24 +21,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                 DAO dao = new DAO();
-                 final Usuario u = dao.getUsuarioByID(1);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        btnInstructor.setText(u.getNombre());
-                    }
-                });
-            }
-        };
-
-        Thread t = new Thread(r);
-        t.start();
-
-
         final Intent i = new Intent(LoginActivity.this,MainActivity.class);
         btnResidente = (Button) findViewById(R.id.btnResidente);
         btnInstructor = (Button) findViewById(R.id.btnInstructor);

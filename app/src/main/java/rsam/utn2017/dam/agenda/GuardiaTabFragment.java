@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import rsam.utn2017.dam.agenda.dummy.DummyContent;
-import rsam.utn2017.dam.agenda.dummy.DummyContent.DummyItem;
 
+import rsam.utn2017.dam.agenda.model.Guardia;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,12 +30,14 @@ public class GuardiaTabFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
+    private MyGuardiaRecyclerViewAdapter adapter;
+    private ArrayList<Guardia> listaGuardias = new ArrayList<>();
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public GuardiaTabFragment() {
+        adapter = new MyGuardiaRecyclerViewAdapter(listaGuardias,mListener);
     }
 
     // TODO: Customize parameter initialization
@@ -49,7 +53,7 @@ public class GuardiaTabFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        adapter = new MyGuardiaRecyclerViewAdapter(listaGuardias,mListener);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -69,7 +73,9 @@ public class GuardiaTabFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyGuardiaRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
@@ -84,12 +90,22 @@ public class GuardiaTabFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+
+        adapter = new MyGuardiaRecyclerViewAdapter(listaGuardias,mListener);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void updateDataSet(ArrayList<Guardia> listaGuardias) {
+
+        adapter.clear();
+        //clearListViewSelection();
+        adapter.addAll(listaGuardias);
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -104,6 +120,6 @@ public class GuardiaTabFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction();
     }
 }

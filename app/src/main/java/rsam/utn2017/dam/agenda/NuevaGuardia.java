@@ -1,7 +1,9 @@
 package rsam.utn2017.dam.agenda;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import rsam.utn2017.dam.agenda.dal.DAO;
 import rsam.utn2017.dam.agenda.model.Guardia;
 import rsam.utn2017.dam.agenda.model.Usuario;
 import rsam.utn2017.dam.agenda.model.Utils;
@@ -37,12 +40,15 @@ public class NuevaGuardia extends AppCompatActivity {
     private Utils utils;
     private EditText fecha;
     private Calendar myCalendar;
-
+    private int req;
+    private DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_guardia);
-
+        dao = new DAO();
+        Intent i = getIntent();
+        req = i.getIntExtra("REQUEST",-1);
 
         guardia = new Guardia();
         txtEquipo = (TextView) findViewById(R.id.txtEquipo);
@@ -71,10 +77,34 @@ public class NuevaGuardia extends AppCompatActivity {
         fecha = (EditText) findViewById(R.id.fecha);
 
 
+
+        if(req == MainActivity.EDITAR_GUARDIA){
+            Guardia g = (Guardia)i.getParcelableExtra("GUARDIA");
+            guardia = g;
+            txtEquipo.setText(g.getTextoEquipo());
+
+
+        }
+
         btnCrearGuardia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Persistir via REST y volver a pantalla de guardias
+                String op = "";
+                if(req != MainActivity.EDITAR_GUARDIA){
+
+                    //guardia.setId( dao.guardias().get(dao.guardias().size() - 1).getId() + 1);
+                    op = "NUEVO";
+                }
+                else {
+                    op = "EDICION";
+                }
+
+                Intent resultado = getIntent();
+                resultado.putExtra("GUARDIA",(Parcelable) guardia);
+                resultado.putExtra("OPERACION",op);
+                resultado.putExtra("RESULTADO","OK" );
+                setResult(RESULT_OK, resultado);
+                finish();
 
 
             }

@@ -1,11 +1,21 @@
 {
-"guardias" : [],
-"lugares": [],
-"usuarios" : [
-	{
-	"id": 1,
-	"dni":"1234",
-	"nombre":"juan perez"
-	}
-	]
+  "guardias": [
+    {
+      "id": 1,
+      "fecha": "19/01/18",
+      "equipo": [
+        {
+          "uID": 1
+        }
+      ]
+    }
+  ],
+  "lugares": [],
+  "usuarios": [
+    {
+      "id": 1,
+      "dni": "1234",
+      "nombre": "juan perez"
+    }
+  ]
 }

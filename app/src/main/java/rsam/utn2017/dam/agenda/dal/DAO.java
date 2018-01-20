@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.RunnableFuture;
 
 import rsam.utn2017.dam.agenda.model.Guardia;
 import rsam.utn2017.dam.agenda.model.Usuario;
@@ -88,7 +89,7 @@ public class DAO  {
 
 
     public List<Guardia> guardias() {
-        if(listaGuardias!=null && listaGuardias.size()>0) return this.listaGuardias;
+        if(listaGuardias!=null) return this.listaGuardias;
 
         listaGuardias = new ArrayList<>();
         String guardiasJSON = cliente.getAll("guardias");
@@ -198,8 +199,19 @@ public class DAO  {
 
 
 
-    public void crear(Guardia g) {
-        cliente.post("guardias",g.toJSON());
+    public void crear(final Guardia g) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                Integer newID = guardias().size() + 1;
+                g.setId(newID);
+                cliente.post("guardias",g.toJSON());
+            }
+        };
+
+        Thread t = new Thread(r);
+        t.start();
+
     }
 
 

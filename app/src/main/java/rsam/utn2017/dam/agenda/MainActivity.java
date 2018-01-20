@@ -20,11 +20,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
-import rsam.utn2017.dam.agenda.dummy.DummyContent;
+import java.util.ArrayList;
+import java.util.List;
+
+import rsam.utn2017.dam.agenda.dal.DAO;
+import rsam.utn2017.dam.agenda.model.Guardia;
 
 public class MainActivity extends AppCompatActivity implements CronogramaTabFragment.OnFragmentInteractionListener, NoticiasTabFragment.OnFragmentInteractionListener, GuardiaTabFragment.OnListFragmentInteractionListener {
-
+public static int NUEVA_GUARDIA = 332;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -41,18 +46,24 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
     private ViewPager mViewPager;
     private FloatingActionButton fab;
     private String tipousuario;
+    private DAO dao;
+    private ArrayList<Guardia> listaGuardias;
+    private GuardiaTabFragment guardiaFragment;
+    public static int EDITAR_GUARDIA = 821;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        guardiaFragment = new GuardiaTabFragment();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        dao = new DAO();
+        listaGuardias = new ArrayList<>();
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -65,11 +76,17 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
             @Override
             public void onClick(View view) {
                 Intent nuevaGuardia = new Intent(MainActivity.this,NuevaGuardia.class);
-                startActivityForResult(nuevaGuardia,2);
+                startActivityForResult(nuevaGuardia,NUEVA_GUARDIA);
             }
         });
         fab.hide();
 
+
+        Runnable runnable = new UpdateDataSetRunnable("");
+
+
+        Thread t = new Thread(runnable);
+        t.start();
 
         Intent i = getIntent();
         tipousuario = i.getStringExtra("USR");
@@ -104,6 +121,71 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
 
 
 
+
+
+
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,Intent data){
+        if(resultCode == RESULT_OK){
+            String opResult = "";
+            Guardia g = (Guardia) data.getParcelableExtra("GUARDIA");
+            if(requestCode == NUEVA_GUARDIA){
+                dao.crear(g);
+                opResult = "Guardia creada";
+            }
+            else if (requestCode == EDITAR_GUARDIA) {
+                //
+                String op = data.getStringExtra("OPERACION");
+                if(op.equals("EDICION")){
+                    dao.actualizar(g);
+                    opResult = "Guardia modificada";
+                }
+                else{
+
+                    //Eliminar reclamo
+                    dao.borrar(g);
+                    opResult = "Guardia eliminada";
+                }
+
+            }
+
+            Runnable runnable = new UpdateDataSetRunnable(opResult);
+
+
+            Thread t = new Thread(runnable);
+            t.start();
+        }
+    }
+
+
+    private class UpdateDataSetRunnable implements Runnable{
+
+        private String _msg;
+        UpdateDataSetRunnable(String msg){
+            _msg = msg;
+        }
+        @Override
+        public void run() {
+            List<Guardia> _guardias = dao.guardias();
+            listaGuardias.clear();
+            listaGuardias.addAll(_guardias);
+            runOnUiThread(new Runnable() {
+                public void run() {
+
+                    //adapter.notifyDataSetChanged();
+                    guardiaFragment.updateDataSet(listaGuardias);
+                    if(!_msg.isEmpty())
+                        Toast.makeText(MainActivity.this,_msg,Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
+
+
     }
 
 
@@ -129,15 +211,15 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
+    public void onListFragmentInteraction(){}
 
     /**
      * A placeholder fragment containing a simple view.
@@ -196,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements CronogramaTabFrag
                 case 1:
                     return new NoticiasTabFragment();
                 default:
-                    return new GuardiaTabFragment();
+                    return guardiaFragment;
             }
         }
 

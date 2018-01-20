@@ -20,7 +20,7 @@ public class Guardia implements Serializable, Parcelable {
 
         private ArrayList<Usuario> Equipo;
         private Date Fecha;
-        private Integer id;
+        private Integer id = 0;
 
 
     public String getTextoEquipo() {
@@ -32,6 +32,10 @@ public class Guardia implements Serializable, Parcelable {
         return res;
     }
 
+    public String getMockText(){
+        return "texto para ocupar espacio";
+    }
+
     public Guardia(Parcel in){
         id = in.readInt();
         Fecha = (Date)in.readSerializable();
@@ -40,7 +44,10 @@ public class Guardia implements Serializable, Parcelable {
     public Guardia(){
         setEquipo(new ArrayList<Usuario>());
     }
-
+    public Guardia(int id){
+        setEquipo(new ArrayList<Usuario>());
+        this.id = id;
+    }
     public void addUsuario(Usuario usuario) {
         Equipo.add(usuario);
     }
