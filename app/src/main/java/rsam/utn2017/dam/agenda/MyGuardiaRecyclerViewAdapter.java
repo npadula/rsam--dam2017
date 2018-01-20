@@ -9,7 +9,6 @@ import android.widget.TextView;
 import rsam.utn2017.dam.agenda.GuardiaTabFragment.OnListFragmentInteractionListener;
 import rsam.utn2017.dam.agenda.model.Guardia;
 
-import java.security.Guard;
 import java.util.List;
 
 /**
@@ -37,8 +36,9 @@ public class MyGuardiaRecyclerViewAdapter extends RecyclerView.Adapter<MyGuardia
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getId().toString());
-        holder.mContentView.setText(mValues.get(position).getMockText());
+        //holder.mIdView.setText(mValues.get(position).getId().toString());
+        holder.txtEquipo.setText(mValues.get(position).getTextoEquipo());
+        holder.txtFecha.setText(mValues.get(position).getFechaString());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,20 +66,22 @@ public class MyGuardiaRecyclerViewAdapter extends RecyclerView.Adapter<MyGuardia
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+
+        public final TextView txtEquipo;
+        public final TextView txtFecha;
         public Guardia mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+
+            txtEquipo = (TextView) view.findViewById(R.id.content);
+            txtFecha = (TextView) view.findViewById(R.id.fechaGuardia);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + txtEquipo.getText() + "'";
         }
     }
 }

@@ -132,4 +132,16 @@ public class Guardia implements Serializable, Parcelable {
             return "";
         }
     }
+
+    public String getFechaString() {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        try{
+            return sdf.format(getFecha());
+        }
+        catch (Exception ex){
+            return "";
+        }
+    }
 }

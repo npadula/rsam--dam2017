@@ -115,6 +115,8 @@ public class DAO  {
                     f = new Date();
                 }
 
+                guardia.setFecha(f);
+
 
                 JSONArray equipo = unaFila.getJSONArray("equipo");
                 guardia.setEquipo(new ArrayList<Usuario>());
