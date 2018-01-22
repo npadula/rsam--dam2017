@@ -13,12 +13,14 @@ import org.json.JSONObject;
 import java.security.Guard;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.RunnableFuture;
 
 import rsam.utn2017.dam.agenda.model.Guardia;
+import rsam.utn2017.dam.agenda.model.Lugar;
 import rsam.utn2017.dam.agenda.model.Usuario;
 
 
@@ -39,7 +41,7 @@ public class DAO  {
 
         //para celular
         //server="http://192.168.42.29:3000";
-        //server = "http://192.168.0.107:3000"; //(nico)
+        server = "http://192.168.0.102:3000"; //(nico)
         cliente = new MyGenericHTTPClient(server);
     }
 
@@ -225,5 +227,22 @@ public class DAO  {
 
     public void borrar(Guardia g) {
         cliente.delete("guardias",g.getId());
+    }
+
+    public ArrayList<Lugar> lugares() {
+        ArrayList<Lugar> lugares = new ArrayList<>();
+
+        String estadosJSON = cliente.getAll("lugares");
+        try {
+            JSONArray arr = new JSONArray(estadosJSON);
+            for(int i=0;i<arr.length();i++){
+                JSONObject unaFila = arr.getJSONObject(i);
+                lugares.add(new Lugar(unaFila.getDouble("lat"),unaFila.getDouble("lng")));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return lugares;
     }
 }

@@ -27,6 +27,7 @@ import java.util.List;
 
 import rsam.utn2017.dam.agenda.dal.DAO;
 import rsam.utn2017.dam.agenda.model.Guardia;
+import rsam.utn2017.dam.agenda.model.Lugar;
 
 public class MainActivity extends AppCompatActivity implements CronogramaTabFragment.OnFragmentInteractionListener, NoticiasTabFragment.OnFragmentInteractionListener, GuardiaTabFragment.OnListFragmentInteractionListener {
 public static int NUEVA_GUARDIA = 332;
@@ -48,6 +49,7 @@ public static int NUEVA_GUARDIA = 332;
     private String tipousuario;
     private DAO dao;
     private ArrayList<Guardia> listaGuardias;
+    private ArrayList<Lugar> lugares = new ArrayList<>();
     private GuardiaTabFragment guardiaFragment;
     public static int EDITAR_GUARDIA = 821;
 
@@ -87,6 +89,25 @@ public static int NUEVA_GUARDIA = 332;
 
         Thread t = new Thread(runnable);
         t.start();
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                final ArrayList<Lugar> _lugares  = dao.lugares();
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lugares.clear();
+                        lugares.addAll(_lugares);
+                    }
+                });
+            }
+        };
+
+        Thread getLugares = new Thread(r);
+        getLugares.start();
 
         Intent i = getIntent();
         tipousuario = i.getStringExtra("USR");
@@ -195,7 +216,9 @@ public static int NUEVA_GUARDIA = 332;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -205,11 +228,14 @@ public static int NUEVA_GUARDIA = 332;
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+            Intent i = new Intent(MainActivity.this,MapsActivity.class);
+        i.putParcelableArrayListExtra("lugares",lugares);
+        startActivity(i);
 
-        return super.onOptionsItemSelected(item);
+        //}
+        return true;
+        //return super.onOptionsItemSelected(item);
     }
 
 
