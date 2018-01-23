@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "334630440996",
+    "firebase_url": "https://tpfinal-ca1fa.firebaseio.com",
+    "project_id": "tpfinal-ca1fa",
+    "storage_bucket": "tpfinal-ca1fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334630440996:android:8fa457a034baf10d",
+        "android_client_info": {
+          "package_name": "rsam.utn2017.dam.agenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334630440996-9e7utp1ihg0da5vmtg6ca3th0dds4rt1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "rsam.utn2017.dam.agenda",
+            "certificate_hash": "39c60cd6df419ee440108ef0a780094d1b2a918e"
+          }
+        },
+        {
+          "client_id": "334630440996-tm9qk2oi5ejve3veq4hcjug9n1q90hkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADyuHUvEsyJ5zgMm9HyNNZCM9GCOpV9D4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334630440996-tm9qk2oi5ejve3veq4hcjug9n1q90hkv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
