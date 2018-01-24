@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import rsam.utn2017.dam.agenda.dal.DAO;
 import rsam.utn2017.dam.agenda.model.Usuario;
 
@@ -31,8 +33,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                FirebaseMessaging.getInstance().subscribeToTopic("residentes");
                 i.putExtra("USR", "RESIDENTE");
                 startActivity(i);
+
+
             }
         });
 
@@ -42,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("residentes");
                 i.putExtra("USR", "INSTRUCTOR");
                 startActivity(i);
             }

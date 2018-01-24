@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +26,7 @@ import java.util.Locale;
 import java.util.concurrent.RunnableFuture;
 
 import rsam.utn2017.dam.agenda.dal.DAO;
+import rsam.utn2017.dam.agenda.dal.MyGenericHTTPClient;
 import rsam.utn2017.dam.agenda.model.Guardia;
 import rsam.utn2017.dam.agenda.model.Usuario;
 import rsam.utn2017.dam.agenda.model.Utils;
@@ -97,6 +101,7 @@ public class NuevaGuardia extends AppCompatActivity {
                 else {
                     op = "EDICION";
                 }
+
 
                 Intent resultado = getIntent();
                 resultado.putExtra("GUARDIA",(Parcelable) guardia);

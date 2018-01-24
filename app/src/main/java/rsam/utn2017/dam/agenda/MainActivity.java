@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -13,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,10 +22,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import rsam.utn2017.dam.agenda.dal.DAO;
+import rsam.utn2017.dam.agenda.dal.MyGenericHTTPClient;
 import rsam.utn2017.dam.agenda.model.Guardia;
 import rsam.utn2017.dam.agenda.model.Lugar;
 
@@ -84,7 +87,7 @@ public static int NUEVA_GUARDIA = 332;
         fab.hide();
 
 
-        Runnable runnable = new UpdateDataSetRunnable("");
+        Runnable runnable = new UpdateDataSetRunnable("","");
 
 
         Thread t = new Thread(runnable);
@@ -175,7 +178,7 @@ public static int NUEVA_GUARDIA = 332;
 
             }
 
-            Runnable runnable = new UpdateDataSetRunnable(opResult);
+            Runnable runnable = new UpdateDataSetRunnable(opResult,g.getTextoEquipo());
 
 
             Thread t = new Thread(runnable);
@@ -186,8 +189,10 @@ public static int NUEVA_GUARDIA = 332;
 
     private class UpdateDataSetRunnable implements Runnable{
 
+        private String _op;
         private String _msg;
-        UpdateDataSetRunnable(String msg){
+        UpdateDataSetRunnable(String op, String msg){
+            _op = op;
             _msg = msg;
         }
         @Override
@@ -195,13 +200,31 @@ public static int NUEVA_GUARDIA = 332;
             List<Guardia> _guardias = dao.guardias(true);
             listaGuardias.clear();
             listaGuardias.addAll(_guardias);
+
+            if(_op.equals("Guardia creada")){
+                try{
+                String server = "http://192.168.0.102:3225";
+                MyGenericHTTPClient msgClient = new MyGenericHTTPClient(server);
+
+                        JSONObject body = new JSONObject();
+
+                            body.put("message",_msg);
+                            msgClient.post("",body.toString());
+
+                }
+                catch (Exception ex){
+                    Log.d("PUSHMSG","SE ROMPIO");
+                }
+
+            }
+
             runOnUiThread(new Runnable() {
                 public void run() {
 
                     //adapter.notifyDataSetChanged();
                     guardiaFragment.updateDataSet(listaGuardias);
-                    if(!_msg.isEmpty())
-                        Toast.makeText(MainActivity.this,_msg,Toast.LENGTH_LONG).show();
+                    if(!_op.isEmpty())
+                        Toast.makeText(MainActivity.this, _op,Toast.LENGTH_LONG).show();
 
                 }
             });

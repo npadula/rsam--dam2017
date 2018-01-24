@@ -5,6 +5,7 @@ const express = require('express');
 const server = express();
 const topic = "residentes";
 
+//Inicializa server y firebase-admin
 server.use( bodyParser.json() );       // to support JSON-encoded bodies
 //server.use(bodyParser.urlencoded({ extended: true }));
 admin.initializeApp({
@@ -13,11 +14,10 @@ admin.initializeApp({
 });
 
 
-
-
 server.post('/', function(req, res) {
 	console.log("Message received: " + req.body.message);
 	
+	//Envia mensaje recibido en la request al topic de residentes
   const payload = {
 		notification: {
 			title: "Nueva Guardia",
@@ -25,7 +25,7 @@ server.post('/', function(req, res) {
 		  }
 	};
 
-// Send a message to devices subscribed to the provided topic.
+
 admin.messaging().sendToTopic(topic, payload)
   .then(function(response) {
     // See the MessagingTopicResponse reference documentation for the
@@ -41,6 +41,7 @@ admin.messaging().sendToTopic(topic, payload)
   res.send('OK!');
 });
 
+//Crea server
 server.listen(3225, function() {
   console.log('Listening on port 3225...');
 });

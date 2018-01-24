@@ -39,6 +39,7 @@
             </intent-filter>
         </receiver>
 
+
         <service
             android:name=".MyFirebaseMessagingService"
             android:enabled="true"
