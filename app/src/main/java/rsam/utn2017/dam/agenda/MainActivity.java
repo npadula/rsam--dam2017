@@ -87,7 +87,11 @@ public static int NUEVA_GUARDIA = 332;
         fab.hide();
 
 
-        Runnable runnable = new UpdateDataSetRunnable("","");
+
+
+
+
+    Runnable runnable = new UpdateDataSetRunnable("","");
 
 
         Thread t = new Thread(runnable);
@@ -203,7 +207,7 @@ public static int NUEVA_GUARDIA = 332;
 
             if(_op.equals("Guardia creada")){
                 try{
-                String server = "http://192.168.0.102:3225";
+                String server = "http://192.168.0.220:3225";
                 MyGenericHTTPClient msgClient = new MyGenericHTTPClient(server);
 
                         JSONObject body = new JSONObject();

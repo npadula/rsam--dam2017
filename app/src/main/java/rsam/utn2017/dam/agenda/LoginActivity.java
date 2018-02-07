@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("residentes");
+                //FirebaseMessaging.getInstance().unsubscribeFromTopic("residentes");
                 i.putExtra("USR", "INSTRUCTOR");
                 startActivity(i);
             }

@@ -40,7 +40,7 @@ public class DAO  {
         server="http://10.0.2.2:3000";
 
         //para celular
-        server = "http://192.168.0.102:3000";
+        server = "http://192.168.0.220:3000";
         cliente = new MyGenericHTTPClient(server);
     }
 
