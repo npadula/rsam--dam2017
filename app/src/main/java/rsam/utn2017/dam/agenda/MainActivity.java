@@ -33,7 +33,10 @@ import rsam.utn2017.dam.agenda.model.Guardia;
 import rsam.utn2017.dam.agenda.model.Lugar;
 
 public class MainActivity extends AppCompatActivity implements CronogramaTabFragment.OnFragmentInteractionListener, NoticiasTabFragment.OnFragmentInteractionListener, GuardiaTabFragment.OnListFragmentInteractionListener {
-public static int NUEVA_GUARDIA = 332;
+    public static int NUEVA_GUARDIA = 332;
+    public static String SERVER_ADDRESS = "http://192.168.0.103"; //Para emulador: "http://10.0.2.2"
+    public static String JSON_SRV_PORT = ":3000";
+    public static String BACKEND_PORT = ":3225";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -207,7 +210,7 @@ public static int NUEVA_GUARDIA = 332;
 
             if(_op.equals("Guardia creada")){
                 try{
-                String server = "http://192.168.0.220:3225";
+                String server = MainActivity.SERVER_ADDRESS + MainActivity.BACKEND_PORT;
                 MyGenericHTTPClient msgClient = new MyGenericHTTPClient(server);
 
                         JSONObject body = new JSONObject();

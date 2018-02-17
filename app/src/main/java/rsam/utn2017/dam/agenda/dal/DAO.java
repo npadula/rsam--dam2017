@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.RunnableFuture;
 
+import rsam.utn2017.dam.agenda.MainActivity;
 import rsam.utn2017.dam.agenda.model.Guardia;
 import rsam.utn2017.dam.agenda.model.Lugar;
 import rsam.utn2017.dam.agenda.model.Usuario;
@@ -30,6 +31,7 @@ import rsam.utn2017.dam.agenda.model.Usuario;
 
 public class DAO  {
 
+
     private ArrayList<Guardia> listaGuardias = null;
     public ArrayList<Usuario> usuarios = null;
     private String server;
@@ -37,10 +39,10 @@ public class DAO  {
 
     public DAO(){
         //para emulador
-        server="http://10.0.2.2:3000";
+        server= MainActivity.SERVER_ADDRESS + MainActivity.JSON_SRV_PORT;
 
         //para celular
-        server = "http://192.168.0.220:3000";
+        //server = "http://192.168.0.220:3000";
         cliente = new MyGenericHTTPClient(server);
     }
 
@@ -50,23 +52,6 @@ public class DAO  {
     }
 
 
-
-   /* public List<Estado> estados() {
-        if(tiposEstados!=null && tiposEstados.size()>0) return this.tiposEstados;
-        else{
-            String estadosJSON = cliente.getAll("estado");
-            try {
-                JSONArray arr = new JSONArray(estadosJSON);
-                for(int i=0;i<arr.length();i++){
-                    JSONObject unaFila = arr.getJSONObject(i);
-                    tiposEstados.add(new Estado(unaFila.getInt("id"),unaFila.getString("tipo")));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return tiposEstados;
-    }*/
 
 
  public ArrayList<Usuario> usuarios(){
