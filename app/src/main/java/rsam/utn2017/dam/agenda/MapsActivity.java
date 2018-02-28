@@ -45,9 +45,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        Intent i = getIntent();
+        //Intent i = getIntent();
 
-        ArrayList<Lugar> lugares = i.getParcelableArrayListExtra("lugares");
+        //ArrayList<Lugar> lugares = i.getParcelableArrayListExtra("lugares");
+        ArrayList<Lugar> lugares = new ArrayList<>();
+        lugares.add(new Lugar(-32.63605,-63.01071));
+        lugares.add(new Lugar(-29.63605,-60.01071));
+        lugares.add(new Lugar(-37.63605,-61.01071));
         cargarHospitales(lugares);
 
     }
